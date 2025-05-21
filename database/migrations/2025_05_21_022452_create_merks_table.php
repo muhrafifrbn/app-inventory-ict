@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('gudang', function (Blueprint $table) {
-            $table->string("kd_gudang")->primary();
-            $table->string("nama_gudang");
+        Schema::create('merk', function (Blueprint $table) {
+            $table->string("kd_merk")->primary();
+            $table->string("nama_merk");
             $table->timestamps();
         });
     }
@@ -23,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('gudangs');
+        Schema::dropIfExists('merks');
     }
 };

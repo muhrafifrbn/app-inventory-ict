@@ -278,7 +278,7 @@
                                 @enderror
                             </div>
                             <div>      
-                                    <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tanggal</label>
+                                    <label for="tanggal" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Upload Tanggal Jika Tanggal Berubah</label>
                                     <div  class="relative max-w-sm">
                                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -292,7 +292,7 @@
                                     @enderror
                             </div>
                             <div> 
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload File Jika File Berubah   </label>
                                 <input name="file" accept="application/pdf" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                                 @error('file')
                                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
@@ -316,7 +316,7 @@
                         <div class="flex justify-end">
                                 <button type="submit" class="text-white  inline-flex items-center bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                                 <svg class="mr-1 -ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 5a1 1 0 011 1v3h3a1 1 0 110 2h-3v3a1 1 0 11-2 0v-3H6a1 1 0 110-2h3V6a1 1 0 011-1z" clip-rule="evenodd"></path></svg>
-                                Tambah
+                                Update
                             </button>
                         </div>
                         

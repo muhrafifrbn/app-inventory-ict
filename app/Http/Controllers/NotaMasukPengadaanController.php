@@ -41,6 +41,45 @@ class NotaMasukPengadaanController extends Controller
 
     public function edit($no_referensi, Request $request){
         $no_referensi = str_replace("-", "/", $no_referensi);
+        $dataNota = NotaMasukPengadaan::where("no_referensi", $no_referensi)->first();
+        $validasi = [
+            "jam" => ["required"]
+        ];
+        if($request->no_referensi != $dataNota->no_referensi){
+            $validasi["no_referensi"] = ["required", "unique:nota_masuk_pengadaan"];
+        }
+        if($request->file){
+            $validasi["file"] = ["file","max:2048", "mimes:pdf"];
+        }
+        if($request->tanggal){
+            $validasi["tanggal"] = ["date", "required"];
+        }
+
+        // Validasi Semua Request Yang Masuk
+        $resultValidation = $request->validate($validasi);
+        
+        if($request->file){
+            // Hapus File Jika Ada File Yang Di Upload
+            Storage::disk("public")->delete($dataNota->dokumen_nota_barang_masuk);
+            $file = $request->file("file");
+            $nameFile = $file->hashName();
+            $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
+            $resultValidate["dokumen_nota_barang_masuk"] = $resultFile;
+        }
+  
+        if($request->tanggal){
+            $resultValidation["tanggal"] = Carbon::createFromFormat('m/d/Y', $resultValidation["tanggal"])->format('Y-m-d');
+            // Konversi tanggal ke hari
+            $tanggal = Carbon::parse($resultValidation['tanggal']);
+            $resultValidation["hari"] = $tanggal->translatedFormat('l');
+        }
+
+     
+        $dataNota->update($resultValidation);
+
+        return \redirect()->route("notaMasukPengadaan.index")->with("sukses", "Nota Berhasil Dirubah");
+
+      
         return $request;
     }
     

@@ -9,4 +9,9 @@ class Gudang extends Model
 {
     /** @use HasFactory<\Database\Factories\GudangFactory> */
     use HasFactory;
+
+    protected $table = "gudang";
+    protected $primaryKey = 'kd_gudang';
+    public $incrementing = false; 
+    protected $keyType = 'string'; 
 }

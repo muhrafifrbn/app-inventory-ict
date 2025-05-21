@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\GudangController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MerekController;
 use App\Http\Controllers\NotaMasukPengadaanController;
 use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\BarangController;
@@ -43,9 +44,9 @@ Route::middleware(["auth"])->controller(NotaMasukPengadaanController::class)->gr
 });
 
 // Route Gudang
-Route::middleware(["auth"])->controller(GudangController::class)->group(function(){
-    Route::get("/gudang", "index");
-});
+// Route::middleware(["auth"])->controller(GudangController::class)->group(function(){
+//     Route::get("/gudang", "index");
+// });
 
 // Route Barang
 Route::middleware(["auth"])->controller(BarangController::class)->group(function(){
@@ -53,5 +54,21 @@ Route::middleware(["auth"])->controller(BarangController::class)->group(function
     Route::post("/dataKeperluan/barang", "store")->name("barang.store");
     Route::put("/dataKeperluan/barang/{kd_barang}", "update")->name("barang.update");
     Route::delete("/dataKeperluan/barang/{kd_barang}", "destroy")->name("barang.hapus");
+});
+
+// Route Gudang
+Route::middleware(["auth"])->controller(GudangController::class)->group(function(){
+    Route::get("/dataKeperluan/gudang", "index")->name("gudang");
+    Route::post("/dataKeperluan/gudang", "store")->name("gudang.store");
+    Route::put("/dataKeperluan/gudang/{kd_gudang}", "update")->name("gudang.update");
+    Route::delete("/dataKeperluan/gudang/{kd_gudang}", "destroy")->name("gudang.hapus");
+});
+
+// Route Merek
+Route::middleware(["auth"])->controller(MerekController::class)->group(function(){
+    Route::get("/dataKeperluan/merek", "index")->name("merek");
+    Route::post("/dataKeperluan/merek", "store")->name("merek.store");
+    Route::put("/dataKeperluan/merek/{kd_merek}", "update")->name("merek.update");
+    Route::delete("/dataKeperluan/merek/{kd_merek}", "destroy")->name("merek.hapus");
 });
 

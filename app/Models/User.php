@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\DetailNotaMasukPengadaan;
 
 class User extends Authenticatable
 {
@@ -19,6 +20,12 @@ class User extends Authenticatable
     public function notaMasukPengadaan(){
         return $this->hasMany(NotaMasukPengadaan::class, "user_nim_nip", "nim_nip");
     }
+
+    // Terhubung ke table Detail Nota Barang Masuk
+    public function DetailNotaMasukPengadaan(){
+        return $this->hasMany(DetailNotaMasukPengadaan::class, "user_nim_nip", "nim_nip");
+    }
+
 
     /**
      * The attributes that are mass assignable.

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Models\DetailNotaMasukPengadaan;
 
 class Barang extends Model
 {
@@ -16,5 +17,10 @@ class Barang extends Model
        "kd_barang",
        "nama_barang"
     ];
+
+     // Terhubung ke table Detail Nota Barang Masuk
+    public function DetailNotaMasukPengadaan(){
+        return $this->hasMany(DetailNotaMasukPengadaan::class, "kd_barang", "kd_barang");
+    }
 
 }

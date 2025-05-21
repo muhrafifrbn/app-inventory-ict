@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('merk', function (Blueprint $table) {
-            $table->string("kd_merk")->primary();
-            $table->string("nama_merk");
+        Schema::create('merek', function (Blueprint $table) {
+            $table->string("kd_merek")->primary();
+            $table->string("nama_merek");
             $table->timestamps();
         });
     }

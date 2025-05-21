@@ -51,6 +51,7 @@ Route::middleware(["auth"])->controller(GudangController::class)->group(function
 Route::middleware(["auth"])->controller(BarangController::class)->group(function(){
     Route::get("/dataKeperluan/barang", "index")->name("barang");
     Route::post("/dataKeperluan/barang", "store")->name("barang.store");
- 
+    Route::put("/dataKeperluan/barang/{kd_barang}", "update")->name("barang.update");
+    Route::delete("/dataKeperluan/barang/{kd_barang}", "destroy")->name("barang.hapus");
 });
 

@@ -10,6 +10,7 @@
 </head>
 <body class="dark:bg-gray-800 bg-gray-100">
   
+    @include('sweetalert::alert')
 
 {{-- Navbar --}}
 <x-dashboard.navbar />

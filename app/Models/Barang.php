@@ -11,4 +11,10 @@ class Barang extends Model
     protected $primaryKey = 'kd_barang';
     public $incrementing = false; 
     protected $keyType = 'string'; 
+
+     protected $fillable = [
+       "kd_barang",
+       "nama_barang"
+    ];
+
 }

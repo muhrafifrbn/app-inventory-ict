@@ -5,6 +5,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MerekController;
 use App\Http\Controllers\NotaMasukPengadaanController;
 use App\Http\Controllers\RegistrasiController;
+use App\Http\Controllers\DetailNotaBarangMasukController;
 use App\Http\Controllers\BarangController;
 use App\Models\Gudang;
 use App\Models\NotaMasukPengadaan;
@@ -17,8 +18,6 @@ Route::get('/', function () {
 Route::get('/users', function () {
     return view('welcome');
 });
-
-
 
 
 Route::get("/login", [LoginController::class, "index"])->middleware(["guest"])->name("login");
@@ -42,6 +41,13 @@ Route::middleware(["auth"])->controller(NotaMasukPengadaanController::class)->gr
     Route::delete("/notaMasukPengadaan/{no_referensi}", "destroy");
     Route::get("/notaBarang/notaDetailMasukPengadaan/", "indexDetail")->name("detail.pengadaan");
 });
+
+// Route Detail Nota Masuk
+Route::middleware(["auth"])->controller(DetailNotaBarangMasukController::class)->group(function(){
+    Route::get("/notaBarang/notaDetailMasukPengadaan/{no_referensi}", "index")->name("detail.pengadaan");
+    Route::post("/notaBarang/notaDetailMasukPengadaan/{no_referensi}", "store")->name("detail.store");
+});
+
 
 // Route Gudang
 // Route::middleware(["auth"])->controller(GudangController::class)->group(function(){

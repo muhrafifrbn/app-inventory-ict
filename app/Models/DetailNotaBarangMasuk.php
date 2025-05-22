@@ -16,6 +16,16 @@ class DetailNotaBarangMasuk extends Model
 
      
     protected $table = "detail_nota_barang_masuk";
+    
+    protected $fillable = [
+       "no_referensi",
+       "kd_gudang",
+       "kd_merek",
+       "kd_barang",
+       "user_nim_nip",
+       "total_barang_baru",
+       "foto_barang"
+    ];
   
     // Terhubung ke table Nota Masuk
     public function notaMasukPengadaan(){

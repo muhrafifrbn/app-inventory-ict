@@ -1,22 +1,6 @@
 <x-dashboard.layout>
     <div>
         <section class="bg-gray-50 dark:bg-gray-900 py-3 sm:py-5">
-            @if (session("sukses"))
-            <div id="alert-border-3" class="flex items-center p-4 mb-4 text-green-800 border-t-4 border-green-300 bg-green-50 dark:text-green-400 dark:bg-gray-800 dark:border-green-800" role="alert">
-                <svg class="shrink-0 w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5ZM9.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3ZM12 15H8a1 1 0 0 1 0-2h1v-3H8a1 1 0 0 1 0-2h2a1 1 0 0 1 1 1v4h1a1 1 0 0 1 0 2Z"/>
-                </svg>
-                <div class="ms-3 text-sm font-medium">
-                    {{session("sukses")}}
-                </div>
-                <button type="button" class="ms-auto -mx-1.5 -my-1.5 bg-green-50 text-green-500 rounded-lg focus:ring-2 focus:ring-green-400 p-1.5 hover:bg-green-200 inline-flex items-center justify-center h-8 w-8 dark:bg-gray-800 dark:text-green-400 dark:hover:bg-gray-700"  data-dismiss-target="#alert-border-3" aria-label="Close">
-                <span class="sr-only">Dismiss</span>
-                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                </svg>
-                </button>
-            </div>
-            @endif
             @if ($errors->any())
                 <div class="flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
                     <svg class="shrink-0 inline w-4 h-4 me-3 mt-[2px]" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -39,7 +23,7 @@
                         <div class="flex items-center flex-1 space-x-4">
                             <h5>
                                 <span class="text-gray-500">Detail Nota Masuk Untuk No Referensi</span>
-                                <span class="dark:text-white">UBL/01/bl02</span>
+                                <span class="dark:text-white">{{ $no_referensi }}</span>
                             </h5>
                          
                         </div>
@@ -79,8 +63,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
-                                    <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                @forelse ( $detailNota as $item)
+                                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <td class="w-4 px-4 py-3">
                                                 <div class="flex items-center">
                                                     <input id="checkbox-table-search-1" type="checkbox" onclick="event.stopPropagation()" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
@@ -95,12 +79,11 @@
                                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">20</td>
                                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">Baru</td>
                                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                <button data-modal-target="default" data-modal-toggle="default" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Lihat</button> 
+                                                <button data-modal-target="default-{{$item->id}}" data-modal-toggle="default-{{$item->id}}" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Lihat</button> 
                                             </td>
                                         
                                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <button type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Detail</button> 
-                                            <a href="/notaBarang/notaMasukPengadaan/" type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Edit</a>
+                                            <a href="" type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Edit</a>
                                             <form class="inline-block" action="/notaMasukPengadaan/" method="post">
                                             @csrf
                                             @method("delete")
@@ -108,6 +91,16 @@
                                             </form>
                                             </td>
                                     </tr>
+                                @empty
+                                      <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
+                                        <td colspan="8" > 
+                                                <div class="p-4 text-center mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
+                                                    <span class="font-medium">Detail Nota Masuk Pengadaan Masih Kosong!</span> 
+                                                </div>
+                                        </td>
+                                      </tr>
+                                @endforelse
+                                  
                                
                                
                             
@@ -179,36 +172,41 @@
                         </button>   
                     </div>
                     <!-- Modal body -->
-                    <form action="/notaMasukPengadaan" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route("detail.store", str_replace("/", "-", $no_referensi)) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
+                            <input type="hidden" name="no_referensi" id="no_referensi" value="{{ $no_referensi }}">
+
                             <div>
-                                <label for="no_referensi" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nama Barang</label>
-                                <input type="text" name="no_referensi" id="no_referensi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Type product name" required="">
-                                @error('no_referensi')
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
-                                @enderror
-                            </div>
-                            <div>      
-                                    <label for="merk" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Merk</label>
-                                    <select id="merk" name="merk" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Merk</option>
-                                        <option value="Asus">Asus</option>
-                                        <option value="Samsung">Samsung</option>
+                                    <label for="barang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Barang</label>
+                                    <select id="barang" name="kd_barang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                            @foreach ($barang as $item)
+                                                     <option value="{{ $item->kd_barang }}">{{ $item->nama_barang }}</option>
+                                            @endforeach
                                     </select>
-                                    @error('merk')
+                                    @error('kd_barang')
                                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                                     @enderror
                             </div>
                             <div>      
                                     <label for="merk" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Merk</label>
-                                    <select id="merk" name="merk" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Pilih Gudang</option>
-                                        <option value="Lab 1">Lab 1</option>
-                                        <option value="Lab 2">Lab 2</option>
-                                        <option value="Lab 3">Lab 3</option>
+                                    <select id="merk" name="kd_merek" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                       @foreach ($merek as $item)
+                                                     <option value="{{ $item->kd_merek }}">{{ $item->nama_merek }}</option>
+                                        @endforeach
                                     </select>
-                                    @error('lab')
+                                    @error('kd_merek')
+                                        <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
+                                    @enderror
+                            </div>
+                            <div>      
+                                    <label for="gudang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Gudang</label>
+                                    <select id="gudang" name="kd_gudang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                                       @foreach ($gudang as $item)
+                                                     <option value="{{ $item->kd_gudang }}">{{ $item->nama_gudang }}</option>
+                                        @endforeach
+                                    </select>
+                                    @error('kd_gudang')
                                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                                     @enderror
                             </div>
@@ -219,18 +217,18 @@
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                                 @enderror
                             </div>
-                            <div>
-                                <label for="keterangan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
-                                <input type="text" name="keterangan" id="keterangan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Jumlah" required="">
-                                @error('jumlah')
-                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
-                                @enderror
-                            </div>
                              <div> 
-                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-                                <input name="file" accept="application/pdf" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
+                                <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload Foto  </label>
+                                <input name="file" accept="image/*" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" id="file_input" type="file">
                                 @error('file')
                                         <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
+                                @enderror
+                            </div>
+                            <div>
+                                <label for="keterangan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Keterangan</label>
+                                <input type="text" name="keterangan" id="keterangan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Keterangan" required="">
+                                @error('keterangan')
+                                    <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                                 @enderror
                             </div>
                         </div>
@@ -250,17 +248,17 @@
 
         {{-- Modal Show File --}}
         <!-- Main modal -->
-        @foreach ($notaMasuk as $item) 
-            <div id="default-{{$item->no_referensi}}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+        @foreach ($detailNota as $item) 
+            <div id="default-{{$item->id}}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div class="relative  w-full max-w-7xl max-h-full">
                     <!-- Modal content -->
                     <div class="relative bg-white rounded-lg shadow-sm dark:bg-gray-700">
                         <!-- Modal header -->
                         <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600 border-gray-200">
                             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Nota Masuk
+                                Foto Barang
                             </h3>
-                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-{{$item->no_referensi}}">
+                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-{{$item->id}}">
                                 <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
                                 </svg>
@@ -270,7 +268,7 @@
                         <!-- Modal body -->
                         <div class="p-4 md:p-5 space-y-4">
                             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                <iframe class="w-full h-[600px]" src="{{ Storage::url($item->dokumen_nota_barang_masuk) }}"></iframe>
+                                <iframe class="w-full h-[600px]" src="{{ Storage::url($item->foto_barang) }}"></iframe>
                             </p>
                         </div>
                     </div>

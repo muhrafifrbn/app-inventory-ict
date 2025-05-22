@@ -29,7 +29,10 @@ Route::post("/registrasi", [RegistrasiController::class, "store"]);
 // Route Sidebar Dashboard
 Route::middleware(["auth"])->group(function(){
     Route::get("/dashboard", fn() => view("dashboard.index"));
-    Route::get("/notaBarang", fn() => view("dashboard.notaBarang"));
+     Route::get("/notaBarang", function(){
+        $notaMasuk = count( NotaMasukPengadaan::all());
+        return view('dashboard.notaBarang', ["notaMasuk" => $notaMasuk]);
+    });
     Route::get("/dataKeperluan", fn() => view("dashboard.dataKeperluan.index"))->name("dataKeperluan");
 });
 
@@ -45,7 +48,9 @@ Route::middleware(["auth"])->controller(NotaMasukPengadaanController::class)->gr
 // Route Detail Nota Masuk
 Route::middleware(["auth"])->controller(DetailNotaBarangMasukController::class)->group(function(){
     Route::get("/notaBarang/notaDetailMasukPengadaan/{no_referensi}", "index")->name("detail.pengadaan");
-    Route::post("/notaBarang/notaDetailMasukPengadaan/{no_referensi}", "store")->name("detail.store");
+    Route::post("/notaBarang/notaDetailMasukPengadaan", "store")->name("detail.store");
+    Route::delete("/notaBarang/notaDetailMasukPengadaan/{id}", "destroy")->name("detail.hapus");
+    Route::put("/notaBarang/notaDetailMasukPengadaan/{id}", "update")->name("detail.update");
 });
 
 

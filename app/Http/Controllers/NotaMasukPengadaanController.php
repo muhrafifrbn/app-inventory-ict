@@ -64,7 +64,7 @@ class NotaMasukPengadaanController extends Controller
             $file = $request->file("file");
             $nameFile = $file->hashName();
             $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
-            $resultValidate["dokumen_nota_barang_masuk"] = $resultFile;
+            $resultValidation["dokumen_nota_barang_masuk"] = $resultFile;
         }
   
         if($request->tanggal){

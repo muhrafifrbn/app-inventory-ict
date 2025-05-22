@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\NotaMasukPengadaan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailNotaBarangMasuk;
+use Illuminate\Support\Facades\Storage;
 
 class DetailNotaBarangMasukController extends Controller
 {
@@ -19,6 +20,10 @@ class DetailNotaBarangMasukController extends Controller
         $barang = Barang::all();
         $gudang = Gudang::all();
         $merek = Merek::all();
+
+        $title = 'Hapus Data';
+        $text = "Yakin Data Ingin Dihapus?";
+        confirmDelete($title, $text);
         return view("dashboard.notaMasuk.detail", [
             "no_referensi" => $no_referensi,
             "detailNota" => $dataNota-> detailNotaBarangMasuk,
@@ -34,9 +39,8 @@ class DetailNotaBarangMasukController extends Controller
             "kd_barang" => ["required"],
             "kd_gudang" => ["required"],
             "kd_merek" => ["required"],
-            "file" => ["file","max:2048", "required", "image"],
             'jumlah'  => 'required|integer|min:1',
-            'file'    => 'required|image|mimes:jpeg,png,jpg|max:5048', // maksimal 2MB
+            'file'    => 'required|image|mimes:jpeg,png,jpg|max:5048', // maksimal 5MB
             'keterangan'  => 'required|string|max:255',
         ]);
 
@@ -55,7 +59,53 @@ class DetailNotaBarangMasukController extends Controller
 
         alert()->success("Sukses", "Data Berhasil Ditambahkan");
 
-        return \redirect()->route("detail.pengadaan", $no_referensi)->with("sukses", "Data Sukses Ditambahkan");
+        return \redirect()->route("detail.pengadaan", str_replace("/", "-", $no_referensi))->with("sukses", "Data Sukses Ditambahkan");
+
+    }
+
+      public function update(DetailNotaBarangMasuk $id, Request $request){
+            
+        $detailNota = $id;
+
+
+        $validasi = [
+            "kd_barang" => ["required"],
+            "kd_gudang" => ["required"],
+            "kd_merek" => ["required"],
+            'jumlah'  => 'required|integer|min:1',
+            'keterangan'  => 'required|string|max:255',
+        ];
+     
+        if($request->file){
+            $validasi["file"] =  'required|image|mimes:jpeg,png,jpg|max:5048';// maksimal 2MB;
+        }
+   
+
+        // Validasi Semua Request Yang Masuk
+        $resultValidation = $request->validate($validasi);
+        
+        if($request->file){
+            // Hapus File Jika Ada File Yang Di Upload
+            Storage::disk("public")->delete($detailNota->foto_barang);
+            $file = $request->file("file");
+            $nameFile = $file->hashName();
+            $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
+            $resultValidation["foto_barang"] = $resultFile;
+        }
+  
+    
+        alert()->success("Sukses", "Data Berhasil Dirubah");
+        $detailNota->update($resultValidation);
+
+        return \redirect()->route("detail.pengadaan", str_replace("/", "-", $detailNota->no_referensi))->with("sukses", "Nota Berhasil Dirubah");
+
+    }
+
+    public function destroy(DetailNotaBarangMasuk $id){
+        $no_referensi  = $id->no_referensi;
+        DetailNotaBarangMasuk::destroy($id->id);
+        alert()->success("Sukses", "Data Berhasil Dihapus!");
+        return \redirect()->route("detail.pengadaan", str_replace("/", "-", $no_referensi));
 
     }
 }

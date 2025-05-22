@@ -2,12 +2,13 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use App\Models\NotaMasukPengadaan;
-use App\Models\Gudang;
-use App\Models\Barang;
 use App\Models\User;
+use App\Models\Merek;
+use App\Models\Barang;
+use App\Models\Gudang;
+use App\Models\NotaMasukPengadaan;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class DetailNotaBarangMasuk extends Model
 {
@@ -24,7 +25,8 @@ class DetailNotaBarangMasuk extends Model
        "kd_barang",
        "user_nim_nip",
        "total_barang_baru",
-       "foto_barang"
+       "foto_barang",
+       "keterangan"
     ];
   
     // Terhubung ke table Nota Masuk
@@ -39,11 +41,16 @@ class DetailNotaBarangMasuk extends Model
 
     // Terhubung ke table barang
     public function barang(){
-        return $this->belongsTo(Barang::class, "kd_gudang", "kd_gudang");
+        return $this->belongsTo(Barang::class, "kd_barang", "kd_barang");
     }
 
     // Terhubung ke table users
     public function user(){
-        return $this->belongsTo(User::class, "user_nim_nip", "user_nim_nip");
+        return $this->belongsTo(User::class, "user_nim_nip", "nim_nip");
+    }
+
+     // Terhubung ke table users
+    public function merek(){
+        return $this->belongsTo(Merek::class, "kd_merek", "kd_merek");
     }
 }

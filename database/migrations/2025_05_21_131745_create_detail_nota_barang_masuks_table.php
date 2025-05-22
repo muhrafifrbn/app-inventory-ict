@@ -48,6 +48,10 @@ return new class extends Migration
                 ->on('users')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
+
+            $table->integer("total_barang_baru");
+            $table->string("keterangan");
+            $table->string("foto_barang");
             
             
             $table->timestamps();

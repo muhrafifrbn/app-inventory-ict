@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('nota_masuk_pengadaan', function (Blueprint $table) {
+        Schema::create('nota_pengadaan', function (Blueprint $table) {
             $table->string('no_referensi')->primary();
             $table->string('hari')->nullable(); 
             $table->date('tanggal')->nullable();
             $table->time('jam')->nullable();
+            $table->string("status_nota");
             $table->string('dokumen_nota_barang_masuk')->nullable(); 
             $table->string('user_nim_nip');
             $table->foreign('user_nim_nip')

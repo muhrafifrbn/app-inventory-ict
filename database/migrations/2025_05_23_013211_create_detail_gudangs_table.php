@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('no_referensi');
             $table->foreign('no_referensi')
                 ->references('no_referensi')
-                ->on('nota_masuk_pengadaan')
+                ->on('nota_pengadaan')
                 ->onUpdate('cascade')
                 ->onDelete('cascade');
 

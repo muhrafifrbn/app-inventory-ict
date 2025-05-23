@@ -1,15 +1,17 @@
 <?php
 
-use App\Http\Controllers\GudangController;
-use App\Http\Controllers\LoginController;
-use App\Http\Controllers\MerekController;
-use App\Http\Controllers\NotaMasukPengadaanController;
-use App\Http\Controllers\RegistrasiController;
-use App\Http\Controllers\DetailNotaBarangMasukController;
-use App\Http\Controllers\BarangController;
 use App\Models\Gudang;
 use App\Models\NotaMasukPengadaan;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\MerekController;
+use App\Http\Controllers\RuangController;
+use App\Http\Controllers\BarangController;
+use App\Http\Controllers\GudangController;
+use App\Http\Controllers\RegistrasiController;
+use App\Http\Controllers\DetailGudangController;
+use App\Http\Controllers\NotaMasukPengadaanController;
+use App\Http\Controllers\DetailNotaBarangMasukController;
 
 Route::get('/', function () {
     return view('login');
@@ -54,11 +56,12 @@ Route::middleware(["auth"])->controller(DetailNotaBarangMasukController::class)-
 });
 
 
-// Route Gudang
-Route::middleware(["auth"])->controller(GudangController::class)->group(function(){
-    Route::get("/gudang", "home")->name("gudang.home");
+// Route Detail Gudang
+Route::middleware(["auth"])->controller(DetailGudangController::class)->group(function(){
+    Route::get("/gudang", "index")->name("gudang.home");
     Route::get("/gudang/detail/{kd_gudang}", "detail")->name("gudang.detail");
-    Route::delete("/gudang/detail/{kd_gudang}", "hapusDetail")->name("gudang.hapus");
+    Route::delete("/gudang/detail/{id}", "hapusDetail")->name("gudang.hapus");
+    Route::put("/gudang/detail/{id}", "update")->name("gudang.detail.update");
 });
 
 // Route Barang
@@ -84,4 +87,13 @@ Route::middleware(["auth"])->controller(MerekController::class)->group(function(
     Route::put("/dataKeperluan/merek/{kd_merek}", "update")->name("merek.update");
     Route::delete("/dataKeperluan/merek/{kd_merek}", "destroy")->name("merek.hapus");
 });
+
+// Route Merek
+Route::middleware(["auth"])->controller(RuangController::class)->group(function(){
+    Route::get("/dataKeperluan/ruang", "index")->name("ruang");
+    Route::post("/dataKeperluan/ruang", "store")->name("ruang.store");
+    Route::put("/dataKeperluan/ruang/{kd_ruang}", "update")->name("ruang.update");
+    Route::delete("/dataKeperluan/ruang/{kd_ruang}", "destroy")->name("ruang.hapus");
+});
+
 

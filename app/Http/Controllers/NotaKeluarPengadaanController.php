@@ -2,22 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use App\Models\NotaMasukPengadaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
-class NotaMasukPengadaanController extends Controller
+class NotaKeluarPengadaanController extends Controller
 {
     public function index(){
-        $notaMasuk = NotaMasukPengadaan::where("status_nota", "Nota Masuk")->get();
+        $notaMasuk = NotaMasukPengadaan::all();
         return view("dashboard.notaMasuk.pengadaan", ["notaMasuk" => $notaMasuk]);
     }
 
     public function store(Request $request){
         $resultValidate = $request->validate([
-            "no_referensi" => ["required", "unique:nota_pengadaan"],
+            "no_referensi" => ["required", "unique:nota_masuk_pengadaan"],
             "tanggal" => ["date", "required"],
             "file" => ["file","max:2048", "required", "mimes:pdf"],
             "jam" => ["required"]
@@ -33,7 +33,7 @@ class NotaMasukPengadaanController extends Controller
         $resultValidate["dokumen_nota_barang_masuk"] = $resultFile;
         $resultValidate["user_nim_nip"] = Auth::user()->nim_nip;
         $resultValidate["tanggal"] = Carbon::createFromFormat('m/d/Y', $resultValidate["tanggal"])->format('Y-m-d');
-        $resultValidate["status_nota"] = "Nota Masuk";
+        $resultValidate["status_nota"] = "Nota Keluar";
 
         NotaMasukPengadaan::create($resultValidate);
         

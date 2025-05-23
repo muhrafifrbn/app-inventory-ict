@@ -8,7 +8,7 @@
                     </svg>
                     <span class="sr-only">Danger</span>
                     <div>
-                        <span class="font-medium">Nota Gagal Ditambahkan</span>
+                        <span class="font-medium">Data Gagal Ditambahkan</span>
                         <ul class="mt-1.5 list-disc list-inside">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -169,7 +169,7 @@
                             <div>
                                 <label for="kd_barang" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Barang</label>
                                 <input type="text" name="kd_barang" id="kd_barang" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Masukkan Kode Barang" required="">
-                                @error('kd_barangi')
+                                @error('kd_barang')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                                 @enderror
                             </div>

@@ -11,7 +11,7 @@ class NotaMasukPengadaan extends Model
     /** @use HasFactory<\Database\Factories\NotaMasukPengadaanFactory> */
     use HasFactory;
 
-    protected $table = "nota_masuk_pengadaan";  
+    protected $table = "nota_pengadaan";  
     protected $primaryKey = 'no_referensi';
     public $incrementing = false; 
     protected $keyType = 'string'; 
@@ -23,6 +23,7 @@ class NotaMasukPengadaan extends Model
         "jam",
         "dokumen_nota_barang_masuk",
         "user_nim_nip",
+        "status_nota",
     ];
 
     // Terhubung ke Table User

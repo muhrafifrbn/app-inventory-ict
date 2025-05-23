@@ -73,7 +73,6 @@ class DetailNotaBarangMasukController extends Controller
                 "kondisi_barang" => "Barang Baru",
                 "keterangan" => $getKode,
                 "status_keadaan" => "Tersedia",
-                "foto_barang" => $data->foto_barang,
             ]);
         }
        
@@ -87,8 +86,6 @@ class DetailNotaBarangMasukController extends Controller
       public function update(DetailNotaBarangMasuk $id, Request $request){
             
         $detailNota = $id;
-
-
         $validasi = [
             "kd_barang" => ["required"],
             "kd_gudang" => ["required"],

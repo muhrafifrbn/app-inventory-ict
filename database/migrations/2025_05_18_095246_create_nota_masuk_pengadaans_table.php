@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('tanggal')->nullable();
             $table->time('jam')->nullable();
             $table->string("status_nota");
-            $table->string('dokumen_nota_barang_masuk')->nullable(); 
+            $table->string('dokumen_nota_barang')->nullable(); 
             $table->string('user_nim_nip');
             $table->foreign('user_nim_nip')
                 ->references('nim_nip')

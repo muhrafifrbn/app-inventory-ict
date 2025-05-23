@@ -267,8 +267,9 @@
                                         @foreach ($barang as $itemBarang)
                                                 @if ($itemBarang->kd_barang == $item->kd_barang)
                                                     <option selected value="{{ $itemBarang->kd_barang }}">{{ $itemBarang->nama_barang }}</option>
-                                                @endif
+                                                @else
                                                  <option value="{{ $itemBarang->kd_barang }}">{{ $itemBarang->nama_barang }}</option>
+                                                @endif
                                         @endforeach
                                 </select>
                                 @error('kd_barang')
@@ -281,8 +282,9 @@
                                         @foreach ($merek as $itemMerek)
                                                 @if ($itemMerek->kd_merek == $item->kd_merek)
                                                     <option selected value="{{ $itemMerek->kd_merek }}">{{ $itemMerek->nama_merek }}</option>
-                                                @endif
+                                                @else
                                                  <option value="{{ $itemMerek->kd_merek }}">{{ $itemMerek->nama_merek }}</option>
+                                                @endif
                                         @endforeach
                                 </select>
                                 @error('kd_merek')
@@ -295,8 +297,9 @@
                                     @foreach ($gudang as $itemGudang)
                                                 @if ($itemGudang->kd_gudang == $item->kd_gudang)
                                                     <option selected value="{{ $itemGudang->kd_gudang }}">{{ $itemGudang->nama_gudang }}</option>
+                                                @else
+                                                 <option value="{{ $itemGudang->kd_gudang }}">{{ $itemGudang->nama_gudang }}</option>
                                                 @endif
-                                                 <option value="{{ $itemGudang->kd_gudang }}">{{ $itemGudang->kd_gudang }}</option>
                                         @endforeach
                                 </select>
                                 @error('kd_gudang')

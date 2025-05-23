@@ -16,7 +16,7 @@ class DetailNotaBarangMasuk extends Model
     use HasFactory;
 
      
-    protected $table = "detail_nota_barang_masuk";
+    protected $table = "detail_nota_barang";
     
     protected $fillable = [
        "no_referensi",
@@ -26,7 +26,8 @@ class DetailNotaBarangMasuk extends Model
        "user_nim_nip",
        "total_barang_baru",
        "foto_barang",
-       "keterangan"
+       "keterangan",
+       "status_detail_nota"
     ];
   
     // Terhubung ke table Nota Masuk
@@ -54,5 +55,9 @@ class DetailNotaBarangMasuk extends Model
         return $this->belongsTo(Merek::class, "kd_merek", "kd_merek");
     }
 
+     // Terhubung ke table Detail Gudang
+    public function detailGudang(){
+        return $this->hasMany(DetailGudang::class, "no_detail_nota", "id");
+    }
     
 }

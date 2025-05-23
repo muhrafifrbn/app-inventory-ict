@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('detail_nota_barang_masuk', function (Blueprint $table) {
+        Schema::create('detail_nota_barang', function (Blueprint $table) {
             $table->id();
             
             $table->string('no_referensi');
@@ -52,6 +52,7 @@ return new class extends Migration
             $table->integer("total_barang_baru");
             $table->string("keterangan");
             $table->string("foto_barang")->nullable();
+            $table->string( "status_detail_nota");
             
             
             $table->timestamps();

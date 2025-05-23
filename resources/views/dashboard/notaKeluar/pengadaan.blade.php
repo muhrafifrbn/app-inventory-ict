@@ -38,8 +38,8 @@
                     <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
                         <div class="flex items-center flex-1 space-x-4">
                             <h5>
-                                <span class="text-gray-500">Total Nota Masuk</span>
-                                <span class="dark:text-white">{{count($notaMasuk)}}</span>
+                                <span class="text-gray-500">Total Nota Keluar</span>
+                                <span class="dark:text-white">{{count($notaKeluar)}}</span>
                             </h5>
                          
                         </div>
@@ -73,13 +73,13 @@
                                     <th scope="col" class="px-4 py-3">Hari</th>
                                     <th scope="col" class="px-4 py-3">Tanggal</th>
                                     <th scope="col" class="px-4 py-3">Jam</th>
-                                    <th scope="col" class="px-4 py-3">Dokumen Nota Masuk</th>
+                                    <th scope="col" class="px-4 py-3">Dokumen Nota Keluar</th>
                                     <th scope="col" class="px-4 py-3">Dimasukkan Oleh</th>
                                     <th scope="col" class="px-4 py-3">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @forelse ($notaMasuk as $item)
+                                @forelse ($notaKeluar as $item)
                                     <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                                             <td class="w-4 px-4 py-3">
                                                 <div class="flex items-center">
@@ -111,7 +111,7 @@
                                     <tr class="border-b dark:border-gray-600 hover:bg-gray-100 dark:hover:bg-gray-700">
                                         <td colspan="8" > 
                                                 <div class="p-4 text-center mb-4 text-sm text-blue-800 rounded-lg bg-blue-50 dark:bg-gray-800 dark:text-blue-400" role="alert">
-                                                    <span class="font-medium">Nota Masuk Pengadaan Masih Kosong!</span> 
+                                                    <span class="font-medium">Nota Keluar Pengadaan Masih Kosong!</span> 
                                                 </div>
                                         </td>
                                       </tr>
@@ -206,7 +206,7 @@
 
     {{-- Update Modal --}}
     <!-- Main modal -->
-        @foreach ($notaMasuk as $item)  
+        @foreach ($notaKeluar as $item)  
         <div id="update-{{$item->no_referensi}}"   data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-modal md:h-full">
             <div class="relative p-4 w-full max-w-2xl h-full md:h-auto">
                 <!-- Modal content -->
@@ -284,7 +284,7 @@
 
         {{-- Modal Show File --}}
         <!-- Main modal -->
-        @foreach ($notaMasuk as $item) 
+        @foreach ($notaKeluar as $item) 
             <div id="default-{{$item->no_referensi}}" data-modal-backdrop="static" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
                 <div class="relative  w-full max-w-7xl max-h-full">
                     <!-- Modal content -->

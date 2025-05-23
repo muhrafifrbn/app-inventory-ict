@@ -21,6 +21,7 @@ class DetailGudang extends Model
        "status_keadaan",
        "kondisi_barang",
        "keterangan",
+       "no_detail_nota"
     ];
   
     // Terhubung ke table Nota Masuk
@@ -46,5 +47,9 @@ class DetailGudang extends Model
      // Terhubung ke table merek
     public function merek(){
         return $this->belongsTo(Merek::class, "kd_merek", "kd_merek");
+    }
+
+    public function detailNotaMasuk(){
+        return $this->belongsTo(DetailNotaBarangMasuk::class, "no_detail_nota", "id");
     }
 }

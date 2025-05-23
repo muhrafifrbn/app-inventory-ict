@@ -10,4 +10,10 @@ class Ruang extends Model
     protected $primaryKey = 'kd_ruang';
     public $incrementing = false; 
     protected $keyType = 'string'; 
+
+
+    protected $fillable = [
+        "kd_ruang",
+        "nama_ruang"
+     ];
 }

@@ -16,6 +16,9 @@ class DetailGudangController extends Controller
     }
 
     public function detail(Gudang $kd_gudang){
+        $title = 'Hapus Data';
+        $text = "Yakin Data Ingin Dihapus?";
+        confirmDelete($title, $text);
         $barang = Barang::all();
         $merek = Merek::all();
         $gudang= $kd_gudang;
@@ -25,9 +28,9 @@ class DetailGudangController extends Controller
         return view("detailGudang.detail", ["detailGudang" => $detailGudang , "barang" => $barang, "gudang" => $gudang, "merek" => $merek, "namaGudang" => $namaGudang]);
     }
 
-    public function hapusDetail(Gudang $kd_gudang){
-        $detailGudang = $kd_gudang;
-        return $detailGudang;
+    public function hapusDetail(DetailGudang $id){
+        $detailGudang = $id;
+        return $detailGudang->detailNotaMasuk;
     }
 
     public function update(DetailGudang $id, Request $request ){

@@ -14,6 +14,13 @@ return new class extends Migration
         Schema::create('detail_gudang', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('no_detail_nota');
+            $table->foreign('no_detail_nota')
+                ->references('id')
+                ->on('detail_nota_barang')
+                ->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->string('no_referensi');
             $table->foreign('no_referensi')
                 ->references('no_referensi')
@@ -54,7 +61,7 @@ return new class extends Migration
             $table->string("keterangan");
             $table->string("status_keadaan");
             $table->string("kode_lab")->nullable();
-            $table->string("foto_barang");
+            $table->string("foto_barang")->nullable();
             
             
             

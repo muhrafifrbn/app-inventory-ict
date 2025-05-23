@@ -11,13 +11,16 @@ use Illuminate\Support\Facades\Storage;
 class NotaKeluarPengadaanController extends Controller
 {
     public function index(){
-        $notaMasuk = NotaMasukPengadaan::all();
-        return view("dashboard.notaMasuk.pengadaan", ["notaMasuk" => $notaMasuk]);
+        $title = 'Hapus Data';
+        $text = "Yakin Data Ingin Dihapus?";
+        confirmDelete($title, $text);
+        $notaKeluar = NotaMasukPengadaan::where("status_nota", "Nota Keluar")->get();
+        return view("dashboard.notaKeluar.pengadaan", ["notaMasuk" => $notaKeluar]);
     }
 
     public function store(Request $request){
         $resultValidate = $request->validate([
-            "no_referensi" => ["required", "unique:nota_masuk_pengadaan"],
+            "no_referensi" => ["required", "unique:nota_pengadaan"],
             "tanggal" => ["date", "required"],
             "file" => ["file","max:2048", "required", "mimes:pdf"],
             "jam" => ["required"]
@@ -30,15 +33,15 @@ class NotaKeluarPengadaanController extends Controller
         $file = $request->file("file");
         $nameFile = $file->hashName();
         $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
-        $resultValidate["dokumen_nota_barang_masuk"] = $resultFile;
+        $resultValidate["dokumen_nota_barang"] = $resultFile;
         $resultValidate["user_nim_nip"] = Auth::user()->nim_nip;
         $resultValidate["tanggal"] = Carbon::createFromFormat('m/d/Y', $resultValidate["tanggal"])->format('Y-m-d');
         $resultValidate["status_nota"] = "Nota Keluar";
 
+        alert()->success("Sukses", "Data Berhasil Ditambahkan");
         NotaMasukPengadaan::create($resultValidate);
         
-        
-        return \redirect("/notaBarang/notaMasukPengadaan")->with("sukses", "Nota Berhasil Ditambahkan");
+        return \redirect("/notaBarang/notaMasukPengadaan");
     }
 
     public function edit($no_referensi, Request $request){
@@ -48,7 +51,7 @@ class NotaKeluarPengadaanController extends Controller
             "jam" => ["required"]
         ];
         if($request->no_referensi != $dataNota->no_referensi){
-            $validasi["no_referensi"] = ["required", "unique:nota_masuk_pengadaan"];
+            $validasi["no_referensi"] = ["required", "unique:nota_pengadaan"];
         }
         if($request->file){
             $validasi["file"] = ["file","max:2048", "mimes:pdf"];
@@ -62,11 +65,11 @@ class NotaKeluarPengadaanController extends Controller
         
         if($request->file){
             // Hapus File Jika Ada File Yang Di Upload
-            Storage::disk("public")->delete($dataNota->dokumen_nota_barang_masuk);
+            Storage::disk("public")->delete($dataNota->dokumen_nota_barang);
             $file = $request->file("file");
             $nameFile = $file->hashName();
             $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
-            $resultValidation["dokumen_nota_barang_masuk"] = $resultFile;
+            $resultValidation["dokumen_nota_barang"] = $resultFile;
         }
   
         if($request->tanggal){
@@ -77,20 +80,20 @@ class NotaKeluarPengadaanController extends Controller
         }
 
      
+        alert()->success("Sukses", "Data Berhasil Dirubah");
         $dataNota->update($resultValidation);
 
-        return \redirect()->route("notaMasukPengadaan.index")->with("sukses", "Nota Berhasil Dirubah");
+        return \redirect()->route("notaMasukPengadaan.index");
 
-      
-        return $request;
     }
     
     public function destroy( $no_referensi){
         $no_referensi = str_replace("-", "/", $no_referensi);
         $dataNota = NotaMasukPengadaan::where("no_referensi", $no_referensi)->first();
-        Storage::disk('public')->delete($dataNota->dokumen_nota_barang_masuk);
+        Storage::disk('public')->delete($dataNota->dokumen_nota_barang);
+        alert()->success("Sukses", "Data Berhasil Dihapus");
         NotaMasukPengadaan::destroy($no_referensi);
-        return redirect("/notaBarang/notaMasukPengadaan")->with("sukses", "Nota Berhasil Dihapus");
+        return redirect("/notaBarang/notaMasukPengadaan") ;
     }
 
     public function indexDetail(){

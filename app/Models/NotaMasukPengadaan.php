@@ -21,7 +21,7 @@ class NotaMasukPengadaan extends Model
         "hari",
         "tanggal",
         "jam",
-        "dokumen_nota_barang_masuk",
+        "dokumen_nota_barang",
         "user_nim_nip",
         "status_nota",
     ];

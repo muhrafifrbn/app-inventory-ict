@@ -38,6 +38,7 @@ class NotaMasukPengadaanController extends Controller
         $resultValidate["tanggal"] = Carbon::createFromFormat('m/d/Y', $resultValidate["tanggal"])->format('Y-m-d');
         $resultValidate["status_nota"] = "Nota Masuk";
 
+
         alert()->success("Sukses", "Data Berhasil Ditambahkan");
         NotaMasukPengadaan::create($resultValidate);
         

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DetailNotaBarangKeluarController;
 use App\Http\Controllers\NotaKeluarPengadaanController;
 use App\Models\Gudang;
 use App\Models\NotaMasukPengadaan;
@@ -36,7 +37,7 @@ Route::middleware(["auth"])->group(function(){
         $notaMasuk = NotaMasukPengadaan::where("status_nota", "Nota Masuk")->get();
         $notaKeluar = NotaMasukPengadaan::where("status_nota", "Nota Keluar")->get();
         return view('dashboard.notaBarang', ["notaMasuk" => count($notaMasuk), "notaKeluar" => count($notaKeluar)]);
-    });
+    })->name("notaBarang");
     Route::get("/dataKeperluan", fn() => view("dashboard.dataKeperluan.index"))->name("dataKeperluan");
 });
 
@@ -58,18 +59,27 @@ Route::middleware(["auth"])->controller(DetailNotaBarangMasukController::class)-
 });
 
 // Route Nota Keluar Pengadaan
-Route::middleware(["auth"])->controller(NotaKeluarPengadaanController::class)->group(function(){
-    Route::get("/notaBarang/notaKeluarPengadaan", "index")->name("notaKeluarPengadaan.index");
-    Route::post("/notaMasukPengadaan", "store");
-    Route::put("/notaMasukPengadaan/{no_referensi}", "edit");
-    Route::delete("/notaMasukPengadaan/{no_referensi}", "destroy")->name("notaMasukPengadaan.destroy");
-    Route::get("/notaBarang/notaDetailMasukPengadaan/", "indexDetail")->name("detail.pengadaan");
-});
+    Route::middleware(["auth"])->controller(NotaKeluarPengadaanController::class)->group(function(){
+        Route::get("/notaBarang/notaKeluarPengadaan", "index")->name("notaKeluarPengadaan.index");
+        Route::post("/notaKeluarPengadaan", "store")->name("notaKeluarPengadaan.store");
+        Route::put("/notaKeluarPengadaan/{no_referensi}", "edit");
+        Route::delete("/notaKeluarPengadaan/{no_referensi}", "destroy")->name("notaKeluarPengadaan.destroy");
+    });
+
+    // Route Detail Nota Keluar
+    Route::middleware(["auth"])->controller(DetailNotaBarangKeluarController::class)->group(function(){
+        Route::get("/notaBarang/notaDetailKeluarPengadaan/{no_referensi}", "index")->name("detail.keluar.pengadaan");
+        Route::post("/notaBarang/notaDetailKeluarPengadaan", "store")->name("detail.keluar.store");
+        Route::delete("/notaBarang/notaDetailKeluarPengadaan/{id}", "destroy")->name("detail.keluar.hapus");
+        Route::put("/notaBarang/notaDetailKeluarPengadaan/{id}", "update")->name("detail.keluar.update");
+    });
+
 
 
 // Route Detail Gudang
 Route::middleware(["auth"])->controller(DetailGudangController::class)->group(function(){
     Route::get("/gudang", "index")->name("gudang.home");
+    Route::get("/gudang/total/{kd_gudang}   ", "total")->name("gudang.total");
     Route::get("/gudang/detail/{kd_gudang}", "detail")->name("gudang.detail");
     Route::delete("/gudang/detail/{id}", "hapusDetail")->name("gudang.detail.hapus");
     Route::put("/gudang/detail/{id}", "update")->name("gudang.detail.update");

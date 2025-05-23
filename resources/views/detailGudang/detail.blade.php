@@ -17,6 +17,11 @@
                     </div>
                 </div>
             @endif
+            <div class="p-4 mx-auto max-w-screen-2xl lg:px-12">
+                <a href="{{ route("gudang.home") }}" class="w-40 flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-red-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                Kembali
+                </a>
+            </div>
             <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
                 <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                     <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
@@ -270,9 +275,9 @@
                             @enderror
                         </div>
                           <div>
-                                <label for="kode_iventaris" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Iventaris</label>
-                                <input value="{{$item->kode_iventaris}}" type="text" name="kode_iventaris" id="no_referensi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" >
-                                @error('kode_iventaris')
+                                <label for="kode_iventaris" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Kode Inventaris</label>
+                                <input value="{{$item->kode_inventaris}}" type="text" name="kode_inventaris" id="kode_iventaris" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="" >
+                                @error('kode_inventaris')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                                 @enderror
                         </div>

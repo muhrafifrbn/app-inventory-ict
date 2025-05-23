@@ -15,7 +15,7 @@ class NotaKeluarPengadaanController extends Controller
         $text = "Yakin Data Ingin Dihapus?";
         confirmDelete($title, $text);
         $notaKeluar = NotaMasukPengadaan::where("status_nota", "Nota Keluar")->get();
-        return view("dashboard.notaKeluar.pengadaan", ["notaMasuk" => $notaKeluar]);
+        return view("dashboard.notaKeluar.pengadaan", ["notaKeluar" => $notaKeluar]);
     }
 
     public function store(Request $request){
@@ -41,7 +41,7 @@ class NotaKeluarPengadaanController extends Controller
         alert()->success("Sukses", "Data Berhasil Ditambahkan");
         NotaMasukPengadaan::create($resultValidate);
         
-        return \redirect("/notaBarang/notaMasukPengadaan");
+        return \redirect()->route("notaKeluarPengadaan.index");
     }
 
     public function edit($no_referensi, Request $request){
@@ -83,21 +83,18 @@ class NotaKeluarPengadaanController extends Controller
         alert()->success("Sukses", "Data Berhasil Dirubah");
         $dataNota->update($resultValidation);
 
-        return \redirect()->route("notaMasukPengadaan.index");
+        return \redirect()->route("notaKeluarPengadaan.index");
 
     }
-    
+        
     public function destroy( $no_referensi){
         $no_referensi = str_replace("-", "/", $no_referensi);
         $dataNota = NotaMasukPengadaan::where("no_referensi", $no_referensi)->first();
         Storage::disk('public')->delete($dataNota->dokumen_nota_barang);
         alert()->success("Sukses", "Data Berhasil Dihapus");
         NotaMasukPengadaan::destroy($no_referensi);
-        return redirect("/notaBarang/notaMasukPengadaan") ;
+        return \redirect()->route("notaKeluarPengadaan.index");
     }
 
-    public function indexDetail(){
-        $notaMasuk = NotaMasukPengadaan::all();
-        return view("dashboard.notaMasuk.detailPengadaan", ["notaMasuk" => $notaMasuk]);
-    }
+
 }

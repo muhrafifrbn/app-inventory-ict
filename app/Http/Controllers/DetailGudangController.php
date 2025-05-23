@@ -7,12 +7,18 @@ use App\Models\Barang;
 use App\Models\Gudang;
 use App\Models\DetailGudang;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DetailGudangController extends Controller
 {
     public function index(){
         $ruangGudang = Gudang::all();   
-        return view("dashboard.gudang", ["ruangGudang" => $ruangGudang]);
+        $totalTersedia = [];
+        foreach($ruangGudang as $item){
+            $totalTersedia[] = count(DetailGudang::where("kd_gudang", $item->kd_gudang)->where("status_keadaan", "Tersedia")->get());
+        }
+  
+        return view("dashboard.gudang", ["ruangGudang" => $ruangGudang, "totalTersedia" => $totalTersedia]);
     }
 
     public function detail(Gudang $kd_gudang){
@@ -48,7 +54,7 @@ class DetailGudangController extends Controller
         }
 
         if($request->kode_lab){
-            $validasi["kode_iventaris"] = ["required"];
+            $validasi["kode_inventaris"] = ["required"];
         }
      
         if($request->file){
@@ -61,7 +67,10 @@ class DetailGudangController extends Controller
         
         if($request->file){
             // Hapus File Jika Ada File Yang Di Upload
-            Storage::disk("public")->delete($detailGudang->foto_barang);
+            if($detailGudang->foto_barang != null){
+                Storage::disk("public")->delete($detailGudang->foto_barang);
+            }
+        
             $file = $request->file("file");
             $nameFile = $file->hashName();
             $resultFile = $file->storeAs("fotoBarang", $nameFile, "public");
@@ -72,8 +81,12 @@ class DetailGudangController extends Controller
         alert()->success("Sukses", "Data Berhasil Dirubah");
         $detailGudang->update($resultValidation);
 
-        return \redirect()->route("gudang.home", $kodeGudang);
+        return \redirect()->route("gudang.detail", $kodeGudang);
     }
+
+    // public function total(Gudang $kd_gudang){
+    //     $dataDetailNotaMasuk = 
+    // }
 
     
 }

@@ -2,21 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
 use App\Models\Merek;
 use App\Models\Barang;
 use App\Models\DetailGudang;
 use App\Models\Gudang;
-use Illuminate\Http\Request;
 use App\Models\NotaMasukPengadaan;
 use Illuminate\Support\Facades\Auth;
 use App\Models\DetailNotaBarangMasuk;
 use Illuminate\Support\Facades\Storage;
 
-class DetailNotaBarangMasukController extends Controller
+class DetailNotaBarangKeluarController extends Controller
 {
     public function index($no_referensi){
         $no_referensi = str_replace("-", "/", $no_referensi);
-        $dataNota = DetailNotaBarangMasuk::where("no_referensi", $no_referensi)->where("status_detail_nota", "Detail Nota Masuk")->get();
+        $dataNota = DetailNotaBarangMasuk::where("no_referensi", $no_referensi)->where("status_detail_nota", "Detail Nota Keluar")->get();
 
         $barang = Barang::all();
         $gudang = Gudang::all();
@@ -25,7 +26,7 @@ class DetailNotaBarangMasukController extends Controller
         $title = 'Hapus Data';
         $text = "Yakin Data Ingin Dihapus?";
         confirmDelete($title, $text);
-        return view("dashboard.notaMasuk.detail", [
+        return view("dashboard.notaKeluar.detail", [
             "no_referensi" => $no_referensi,
             "detailNota" => $dataNota,
             "gudang" => $gudang,
@@ -47,6 +48,21 @@ class DetailNotaBarangMasukController extends Controller
 
         $no_referensi = $request->no_referensi;
 
+         // Mengambil Data Dari Detail Gudang
+        $dataDetailGudang = DetailGudang::where("kd_gudang", $resultValiation["kd_gudang"])->where("status_keadaan", "Tersedia")->get();
+     
+        $count = 1;
+        foreach($dataDetailGudang as $item){
+            if($count <= $resultValiation["jumlah"]){
+                DetailGudang::where("id", $item->id)->update([
+                    "status_keadaan" => "Dikembalikan"
+                 ]);
+            }
+
+            $count++;
+           
+        }           
+
         $file = $request->file("file");
         $nameFile = $file->hashName();
         $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
@@ -54,7 +70,7 @@ class DetailNotaBarangMasukController extends Controller
         $resultValiation["user_nim_nip"] = Auth::user()->nim_nip;
         $resultValiation["total_barang_baru"] = $resultValiation["jumlah"];
         $resultValiation["no_referensi"] = $no_referensi;
-        $resultValiation["status_detail_nota"] = "Detail Nota Masuk";
+        $resultValiation["status_detail_nota"] = "Detail Nota Keluar";
         
 
        $data =  DetailNotaBarangMasuk::create($resultValiation);
@@ -63,27 +79,11 @@ class DetailNotaBarangMasukController extends Controller
         $bagian = explode('/', $kode);
         $getKode = end($bagian);
 
-            
-        // Memasukkan Data Ke Detail Gudang
-        for ($i=1; $i <= $data->total_barang_baru ; $i++) { 
-                DetailGudang::create([
-                "no_detail_nota" => $data->id,
-                "no_referensi" => $data->no_referensi,
-                "kd_gudang" => $data->kd_gudang,
-                "kd_barang" => $data->kd_barang,
-                "kd_merek" => $data->kd_merek,
-                "user_nim_nip" => $data->user_nim_nip,
-                "kondisi_barang" => "Barang Baru",
-                "keterangan" => $getKode,
-                "status_keadaan" => "Tersedia",
-                
-            ]);
-        }
+                    
        
-
         alert()->success("Sukses", "Data Berhasil Ditambahkan");
 
-        return \redirect()->route("detail.pengadaan", str_replace("/", "-", $no_referensi))->with("sukses", "Data Sukses Ditambahkan");
+        return \redirect()->route("detail.keluar.pengadaan", str_replace("/", "-", $no_referensi))->with("sukses", "Data Sukses Ditambahkan");
 
     }
 
@@ -130,15 +130,18 @@ class DetailNotaBarangMasukController extends Controller
         alert()->success("Sukses", "Data Berhasil Dirubah");
         $detailNota->update($resultValidation);
 
-        return \redirect()->route("detail.pengadaan", str_replace("/", "-", $detailNota->no_referensi)) ;
+        return \redirect()->route("detail.keluar.pengadaan", str_replace("/", "-", $detailNota->no_referensi)) ;
 
     }
 
     public function destroy(DetailNotaBarangMasuk $id){
         $no_referensi  = $id->no_referensi;
+        return $id; 
+        // Mengambil Data Dari Detail Gudang
+        // $dataDetailGudang = DetailGudang::where("kd_gudang", $resultValiation["kd_gudang"])->where("status_keadaan", "Tersedia")->get();
         DetailNotaBarangMasuk::destroy($id->id);
         alert()->success("Sukses", "Data Berhasil Dihapus!");
-        return \redirect()->route("detail.pengadaan", str_replace("/", "-", $no_referensi));
+        return \redirect()->route("detail.keluar.pengadaan", str_replace("/", "-", $no_referensi));
 
     }
 }

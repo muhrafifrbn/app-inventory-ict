@@ -33,6 +33,11 @@
                     </div>
                 </div>
             @endif
+            <div class="p-4 mx-auto max-w-screen-2xl lg:px-12">
+                <a href="{{ route("notaBarang") }}" class="w-40 flex items-center justify-center px-4 py-2 text-sm font-medium text-white rounded-lg bg-red-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                                Kembali
+                </a>
+            </div>
             <div class="px-4 mx-auto max-w-screen-2xl lg:px-12">
                 <div class="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg">
                     <div class="flex flex-col px-4 py-3 space-y-3 lg:flex-row lg:items-center lg:justify-between lg:space-y-0 lg:space-x-4">
@@ -102,9 +107,9 @@
                                                <span class="bg-green-100 text-green-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">{{$item->user->nama}}</span>
                                             </td>
                                             <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            <a href="{{route("detail.pengadaan",str_replace("/", "-", $item->no_referensi))}}" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Detail</a> 
+                                            <a href="{{route("detail.keluar.pengadaan",str_replace("/", "-", $item->no_referensi))}}" type="button" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Detail</a> 
                                             <button data-modal-target="update-{{$item->no_referensi}}" data-modal-toggle="update-{{$item->no_referensi}}" type="button" class="text-gray-900 bg-gradient-to-r from-lime-200 via-lime-400 to-lime-500 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-lime-300 dark:focus:ring-lime-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Edit</button>
-                                            <a data-confirm-delete="true"  href="{{ route("notaMasukPengadaan.destroy", str_replace("/", "-", $item->no_referensi)) }}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Hapus</button>
+                                            <a data-confirm-delete="true"  href="{{ route("notaKeluarPengadaan.destroy", str_replace("/", "-", $item->no_referensi)) }}" class="text-white bg-gradient-to-r from-red-400 via-red-500 to-red-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2">Hapus</button>
                                             </td>
                                     </tr>
                                 @empty
@@ -146,7 +151,7 @@
                         </button>   
                     </div>
                     <!-- Modal body -->
-                    <form action="/notaMasukPengadaan" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route("notaKeluarPengadaan.store") }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">
                             <div>

@@ -6,7 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use App\Models\DetailNotaMasukPengadaan;
+use App\Models\DetailNotaBarangMasuk;
 
 class User extends Authenticatable
 {
@@ -22,9 +22,16 @@ class User extends Authenticatable
     }
 
     // Terhubung ke table Detail Nota Barang Masuk
-    public function DetailNotaMasukPengadaan(){
-        return $this->hasMany(DetailNotaMasukPengadaan::class, "user_nim_nip", "nim_nip");
+    public function detailNotaMasukPengadaan(){
+        return $this->hasMany(DetailNotaBarangMasuk::class, "user_nim_nip", "nim_nip");
     }
+
+    // Terhubung ke table Detail Gudang
+    public function detailGudang(){
+        return $this->hasMany(DetailGudang::class, "user_nim_nip", "nim_nip");
+    }
+
+
 
 
     /**

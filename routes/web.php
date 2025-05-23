@@ -55,9 +55,11 @@ Route::middleware(["auth"])->controller(DetailNotaBarangMasukController::class)-
 
 
 // Route Gudang
-// Route::middleware(["auth"])->controller(GudangController::class)->group(function(){
-//     Route::get("/gudang", "index");
-// });
+Route::middleware(["auth"])->controller(GudangController::class)->group(function(){
+    Route::get("/gudang", "home")->name("gudang.home");
+    Route::get("/gudang/detail/{kd_gudang}", "detail")->name("gudang.detail");
+    Route::delete("/gudang/detail/{kd_gudang}", "hapusDetail")->name("gudang.hapus");
+});
 
 // Route Barang
 Route::middleware(["auth"])->controller(BarangController::class)->group(function(){

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DetailGudang;
 use Illuminate\Http\Request;
 use App\Models\NotaMasukPengadaan;
 use App\Models\Gudang;
@@ -53,4 +54,22 @@ class GudangController extends Controller
         gudang::destroy($kd_gudang);
         return \redirect()->route("gudang");
     }
+
+    public function home(){
+        $ruangGudang = Gudang::all();
+        return view("dashboard.gudang", ["ruangGudang" => $ruangGudang]);
+    }
+
+    public function detail(Gudang $kd_gudang){
+        $gudang= $kd_gudang;
+        $detailGudang = DetailGudang::where("kd_gudang", $gudang->kd_gudang)->paginate(8);
+        return view("detailGudang.detail", ["detailGudang" => $detailGudang, "gudang" => $gudang]);
+    }
+
+    public function hapusDetail(Gudang $kd_gudang){
+        $detailGudang = $kd_gudang;
+        return $detailGudang;
+    }
+
+    
 }

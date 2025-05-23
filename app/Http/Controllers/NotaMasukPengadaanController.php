@@ -36,6 +36,7 @@ class NotaMasukPengadaanController extends Controller
 
         NotaMasukPengadaan::create($resultValidate);
         
+        
         return \redirect("/notaBarang/notaMasukPengadaan")->with("sukses", "Nota Berhasil Ditambahkan");
     }
 

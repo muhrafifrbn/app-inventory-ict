@@ -2,31 +2,25 @@
 
 namespace App\Models;
 
-use App\Models\User;
-use App\Models\Merek;
-use App\Models\Barang;
-use App\Models\Gudang;
-use App\Models\NotaMasukPengadaan;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class DetailNotaBarangMasuk extends Model
+class DetailGudang extends Model
 {
-    /** @use HasFactory<\Database\Factories\DetailNotaBarangMasukFactory> */
-    use HasFactory;
+    protected $table = "detail_gudang";
 
-     
-    protected $table = "detail_nota_barang_masuk";
-    
+
     protected $fillable = [
        "no_referensi",
        "kd_gudang",
        "kd_merek",
        "kd_barang",
        "user_nim_nip",
-       "total_barang_baru",
+       "kode_inventaris",
+       "kode_lab",
        "foto_barang",
-       "keterangan"
+       "status_keadaan",
+       "kondisi_barang",
+       "keterangan",
     ];
   
     // Terhubung ke table Nota Masuk
@@ -49,10 +43,8 @@ class DetailNotaBarangMasuk extends Model
         return $this->belongsTo(User::class, "user_nim_nip", "nim_nip");
     }
 
-     // Terhubung ke table users
+     // Terhubung ke table merek
     public function merek(){
         return $this->belongsTo(Merek::class, "kd_merek", "kd_merek");
     }
-
-    
 }

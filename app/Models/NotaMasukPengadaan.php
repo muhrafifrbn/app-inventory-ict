@@ -34,4 +34,9 @@ class NotaMasukPengadaan extends Model
     public function detailNotaBarangMasuk(){
         return $this->hasMany(DetailNotaBarangMasuk::class, "no_referensi", "no_referensi");
     }
+
+    // Terhubung ke table Detail Gudang
+    public function detailGudang(){
+        return $this->hasMany(DetailGudang::class, "no_referensi", "no_referensi");
+    }
 }

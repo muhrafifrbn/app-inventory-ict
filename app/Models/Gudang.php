@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\DetailNotaMasukPengadaan;
+use App\Models\DetailNotaBarangMasuk;
 
 class Gudang extends Model
 {
@@ -22,7 +22,12 @@ class Gudang extends Model
     ];
 
     // Terhubung ke table Detail Nota Barang Masuk
-    public function DetailNotaMasukPengadaan(){
-        return $this->hasMany(DetailNotaMasukPengadaan::class, "kd_gudang", "kd_gudang");
+    public function detailNotaMasukPengadaan(){
+        return $this->hasMany(DetailNotaBarangMasuk::class, "kd_gudang", "kd_gudang");
+    }
+
+     // Terhubung ke table Detail Gudang
+    public function detailGudang(){
+        return $this->hasMany(DetailGudang::class, "kd_gudang", "kd_gudang");
     }
 }

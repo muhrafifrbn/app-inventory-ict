@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Merek;
 use App\Models\Barang;
+use App\Models\DetailGudang;
 use App\Models\Gudang;
 use Illuminate\Http\Request;
 use App\Models\NotaMasukPengadaan;
@@ -55,7 +56,27 @@ class DetailNotaBarangMasukController extends Controller
         $resultValiation["no_referensi"] = $no_referensi;
         
 
-        DetailNotaBarangMasuk::create($resultValiation);
+       $data =  DetailNotaBarangMasuk::create($resultValiation);
+
+        $kode = $data->no_referensi;
+        $bagian = explode('/', $kode);
+        $getKode = end($bagian);
+
+        // Memasukkan Data Ke Detail Gudang
+        for ($i=1; $i <= $data->total_barang_baru ; $i++) { 
+                DetailGudang::create([
+                "no_referensi" => $data->no_referensi,
+                "kd_gudang" => $data->kd_gudang,
+                "kd_barang" => $data->kd_barang,
+                "kd_merek" => $data->kd_merek,
+                "user_nim_nip" => $data->user_nim_nip,
+                "kondisi_barang" => "Barang Baru",
+                "keterangan" => $getKode,
+                "status_keadaan" => "Tersedia",
+                "foto_barang" => $data->foto_barang,
+            ]);
+        }
+       
 
         alert()->success("Sukses", "Data Berhasil Ditambahkan");
 

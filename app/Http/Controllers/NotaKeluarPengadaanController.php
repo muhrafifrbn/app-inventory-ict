@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use Carbon\Carbon;
+use App\Models\DetailGudang;
+use Illuminate\Http\Request;
 use App\Models\NotaMasukPengadaan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -92,6 +93,23 @@ class NotaKeluarPengadaanController extends Controller
         $dataNota = NotaMasukPengadaan::where("no_referensi", $no_referensi)->first();
         Storage::disk('public')->delete($dataNota->dokumen_nota_barang);
         alert()->success("Sukses", "Data Berhasil Dihapus");
+        // $detailGudang = DetailNo::where("no_referensi", $no_referensi)->get();
+        // // NotaMasukPengadaan::destroy($no_referensi);
+        // return $no_referensi;   
+        // return $detailGudang;
+
+        // $dataDetailGudang = DetailGudang::where("kd_gudang", $id->kd_gudang)->where("status_keadaan", "Dikembalikan")->where("kd_barang", $id->kd_barang)->where("kd_merek", $id->kd_merek)->get();
+        // $count = 1;
+        // foreach($dataDetailGudang as $item){
+        //     if($count <= $id->total_barang_baru){
+        //         DetailGudang::where("id", $item->id)->update([
+        //             "status_keadaan" => "Tersedia"
+        //          ]);
+        //     }
+
+        //     $count++;
+           
+        // }           
         NotaMasukPengadaan::destroy($no_referensi);
         return \redirect()->route("notaKeluarPengadaan.index");
     }

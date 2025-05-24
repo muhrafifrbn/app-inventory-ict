@@ -233,7 +233,7 @@
                         </button>   
                     </div>
                     <!-- Modal body -->
-                    <form action="/notaMasukPengadaan/{{str_replace("/","-","$item->no_referensi")}}" method="POST" enctype="multipart/form-data">
+                    <form action="/notaKeluarPengadaan/{{str_replace("/","-","$item->no_referensi")}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         @method("put")
                         <div class="grid gap-4 mb-4 sm:grid-cols-2">

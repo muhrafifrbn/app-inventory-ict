@@ -49,8 +49,7 @@ class DetailNotaBarangKeluarController extends Controller
         $no_referensi = $request->no_referensi;
 
          // Mengambil Data Dari Detail Gudang
-        $dataDetailGudang = DetailGudang::where("kd_gudang", $resultValiation["kd_gudang"])->where("status_keadaan", "Tersedia")->get();
-     
+        $dataDetailGudang = DetailGudang::where("kd_gudang", $resultValiation["kd_gudang"])->where("status_keadaan", "Tersedia")->where("kd_barang", $resultValiation["kd_barang"])->where("kd_merek", $resultValiation["kd_merek"])->get();
         $count = 1;
         foreach($dataDetailGudang as $item){
             if($count <= $resultValiation["jumlah"]){
@@ -88,13 +87,12 @@ class DetailNotaBarangKeluarController extends Controller
     }
 
       public function update(DetailNotaBarangMasuk $id, Request $request)   {
-            
         $detailNota = $id;
         $validasi = [
             "kd_barang" => ["required"],
             "kd_gudang" => ["required"],
             "kd_merek" => ["required"],
-            'jumlah'  => 'required|integer|min:1',
+            'total_barang_baru'  => 'required|integer|min:1',
             'keterangan'  => 'required|string|max:255',
         ];
      
@@ -125,10 +123,11 @@ class DetailNotaBarangKeluarController extends Controller
             $resultFile = $file->storeAs("notaMasuk", $nameFile, "public");
             $resultValidation["foto_barang"] = $resultFile;
         }
-  
+        
+    
     
         alert()->success("Sukses", "Data Berhasil Dirubah");
-        $detailNota->update($resultValidation);
+        DetailNotaBarangMasuk::where("id", $detailNota->id)->update($resultValidation);
 
         return \redirect()->route("detail.keluar.pengadaan", str_replace("/", "-", $detailNota->no_referensi)) ;
 
@@ -136,10 +135,22 @@ class DetailNotaBarangKeluarController extends Controller
 
     public function destroy(DetailNotaBarangMasuk $id){
         $no_referensi  = $id->no_referensi;
-        return $id; 
         // Mengambil Data Dari Detail Gudang
         // $dataDetailGudang = DetailGudang::where("kd_gudang", $resultValiation["kd_gudang"])->where("status_keadaan", "Tersedia")->get();
         DetailNotaBarangMasuk::destroy($id->id);
+         // Mengambil Data Dari Detail Gudang
+        $dataDetailGudang = DetailGudang::where("kd_gudang", $id->kd_gudang)->where("status_keadaan", "Dikembalikan")->where("kd_barang", $id->kd_barang)->where("kd_merek", $id->kd_merek)->get();
+        $count = 1;
+        foreach($dataDetailGudang as $item){
+            if($count <= $id->total_barang_baru){
+                DetailGudang::where("id", $item->id)->update([
+                    "status_keadaan" => "Tersedia"
+                 ]);
+            }
+
+            $count++;
+           
+        }           
         alert()->success("Sukses", "Data Berhasil Dihapus!");
         return \redirect()->route("detail.keluar.pengadaan", str_replace("/", "-", $no_referensi));
 

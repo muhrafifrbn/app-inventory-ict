@@ -36,7 +36,10 @@ class DetailGudangController extends Controller
 
     public function hapusDetail(DetailGudang $id){
         $detailGudang = $id;
-        return $detailGudang->detailNotaMasuk;
+        $kodeGudang = $detailGudang->gudang->kd_gudang;
+        DetailGudang::destroy($id->id);
+        alert()->success("Sukses", "Data Berhasil Dirubah");
+        return \redirect()->route("gudang.detail", $kodeGudang);
     }
 
     public function update(DetailGudang $id, Request $request ){

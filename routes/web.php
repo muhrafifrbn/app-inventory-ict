@@ -14,6 +14,9 @@ use App\Http\Controllers\RegistrasiController;
 use App\Http\Controllers\DetailGudangController;
 use App\Http\Controllers\NotaMasukPengadaanController;
 use App\Http\Controllers\DetailNotaBarangMasukController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
+
 
 Route::get('/', function () {
     return view('login');
@@ -118,3 +121,13 @@ Route::middleware(["auth"])->controller(RuangController::class)->group(function(
 });
 
 
+// Route Dashboard
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// Route Profile
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});
+
+// Route Role Kepala Lab

@@ -17,8 +17,8 @@
                 <div class="container-input flex gap-2" >
                     <div class="w-1/2">
                         <div>
-                            <label for="nim_nim" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nim / Nip</label>
-                            <input value="{{old("nim_nip")}}" type="text" name="nim_nip" id="nim_nim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Nip" required>
+                            <label for="nim_nim" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NIM/NIP</label>
+                            <input value="{{old("nim_nip")}}" type="text" name="nim_nip" id="nim_nim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan NIM/NIP" required>
                             @error('nim_nip')
                                  <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                             @enderror
@@ -38,8 +38,8 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="no_hp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Handphone</label>
-                            <input value="{{old("no_hp")}}" type="number" name="no_hp" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Alamat" required>
+                            <label for="no_hp" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">No Telepon</label>
+                            <input value="{{old("no_hp")}}" type="number" name="no_hp" id="alamat" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Nomor Telepon" required>
                             @error('no_hp')
                                  <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                             @enderror
@@ -47,9 +47,10 @@
                     </div>
                     <div class="w-1/2"> 
                         <div>
-                                <label for="jabatan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select an option</label>
+                                <label for="jabatan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Pilih Jabatan</label>
                                 <select id="jabatan" name="jabatan_lab" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                                     <option value="spv_iventory">Spv Inventory</option>
+                                    <option value="kepala_lab">Kepala Lab</option>
                                 </select>
                                 @error('jabatan_lab')
                                     <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
@@ -57,7 +58,7 @@
                         </div>
                           <div>
                             <label for="nim_nim" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Angkatan Asisten</label>
-                            <input value="{{old("angkatan_asisten")}}" type="text" name="angkatan_asisten" id="nim_nim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Nip" required>
+                            <input value="{{old("angkatan_asisten")}}" type="text" name="angkatan_asisten" id="nim_nim" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Masukkan Tahun Angkatan" required>
                             @error('angkatan_asisten')
                                  <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                             @enderror
@@ -70,17 +71,17 @@
                             @enderror
                         </div>
                         <div>
-                            <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
-                            <input type="confirm-password" name="password_confirmation" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                            <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Konfirmasi password</label>
+                            <input type="password" name="password_confirmation" id="confirm-password" placeholder="••••••••" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
                             @error('password_confirmation')
                                  <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message}}</span></p>
                             @enderror
                         </div>
                     </div>
                 </div>
-                  <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                  <button type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Buat Akun</button>
                   <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                      Sudah Punya Akun? <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                      Sudah punya akun? <a href="/login" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Masuk</a>
                   </p>
               </form>
           </div>

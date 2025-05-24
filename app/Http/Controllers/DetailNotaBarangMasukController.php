@@ -94,7 +94,6 @@ class DetailNotaBarangMasukController extends Controller
             "kd_barang" => ["required"],
             "kd_gudang" => ["required"],
             "kd_merek" => ["required"],
-            'jumlah'  => 'required|integer|min:1',
             'keterangan'  => 'required|string|max:255',
         ];
      
